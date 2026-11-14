@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="Portfolio de Camille Moreau, graphiste indépendante — identité visuelle, édition et direction artistique.">
+  <title>Camille Moreau — Graphiste indépendante</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+
+    :root {
+      --paper: #f5f2eb;
+      --ink: #24231f;
+      --muted: #77746c;
+      --line: #d9d5cb;
+      --orange: #e85c36;
+      --lime: #d6e65d;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+      --mono: "DM Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(1320px, calc(100% - 96px)); margin-inline: auto; }
+
+    .topbar {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+    }
+    .wordmark { font-size: 15px; font-weight: 700; letter-spacing: -.05em; }
+    .wordmark span { color: var(--orange); }
+    .nav { display: flex; align-items: center; gap: 38px; }
+    .nav a, .availability, .eyebrow, .mono {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .nav a { transition: color .2s ease; }
+    .nav a:hover, .footer-link:hover { color: var(--orange); }
+    .availability { display: flex; align-items: center; gap: 9px; color: var(--muted); }
+    .availability::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: #7d9b4c;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px #7d9b4c20;
+    }
+    .menu-toggle {
+      display: none;
+      border: 0;
+      background: transparent;
+      font-size: 24px;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: 570px;
+      padding: 110px 0 82px;
+      display: grid;
+      grid-template-columns: 1fr 250px;
+      align-items: end;
+      gap: 36px;
+    }
+    .eyebrow { color: var(--muted); }
+    .hero h1 {
+      max-width: 900px;
+      margin: 26px 0 0;
+      font-size: clamp(56px, 8.7vw, 122px);
+      line-height: .96;
+      letter-spacing: -.075em;
+      font-weight: 500;
+    }
+    .hero h1 em { font-family: var(--serif); font-weight: 500; letter-spacing: -.08em; }
+    .hero-note { padding-bottom: 7px; }
+    .hero-note p {
+      max-width: 230px;
+      margin: 0 0 23px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #65625b;
+    }
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--ink);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .text-link span { font-size: 17px; transition: transform .2s ease; }
+    .text-link:hover span { transform: translate(3px, -3px); }
+
+    .work { padding: 34px 0 112px; }
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+    .section-head h2 { margin: 0; font-size: 19px; font-weight: 500; letter-spacing: -.04em; }
+    .filters { display: flex; flex-wrap: wrap; gap: 7px; }
+    .filter {
+      border: 1px solid var(--line);
+      background: transparent;
+      border-radius: 99px;
+      padding: 9px 14px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .03em;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .filter:hover, .filter.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 58px 22px; }
+    .project { min-width: 0; }
+    .project[hidden] { display: none; }
+    .art {
+      height: clamp(270px, 37vw, 490px);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+    .art::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid #ffffff50;
+      pointer-events: none;
+    }
+    .art--soleil { background: #e7603e; }
+    .soleil-disc {
+      width: 51%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #f3cf72;
+      position: absolute;
+      top: 16%;
+      left: 24%;
+      box-shadow: 0 0 0 17px #e7603e, 0 0 0 18px #f3cf7280;
+    }
+    .soleil-word {
+      position: relative;
+      z-index: 1;
+      margin-top: 85px;
+      color: #412e24;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(52px, 8vw, 108px);
+      letter-spacing: -.1em;
+      transform: rotate(-8deg);
+    }
+    .soleil-caption {
+      position: absolute;
+      bottom: 10%; left: 9%;
+      color: #fff3d4;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .art--herbier { background: #cad0a4; }
+    .herbier-paper {
+      width: 45%;
+      height: 70%;
+      background: #f4eddd;
+      box-shadow: 14px 18px 0 #47513c22;
+      transform: rotate(4deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .herbier-paper::before, .herbier-paper::after {
+      content: "";
+      position: absolute;
+      height: 46%;
+      width: 1px;
+      background: #55634b;
+      top: 15%;
+    }
+    .herbier-paper::before { transform: rotate(-28deg); }
+    .herbier-paper::after { transform: rotate(30deg); }
+    .leaf { position: absolute; width: 22px; height: 46px; border-radius: 100% 0 100% 0; background: #7e9567; }
+    .leaf-one { top: 29%; left: 34%; transform: rotate(-55deg); }
+    .leaf-two { top: 35%; right: 33%; transform: rotate(50deg) scale(.8); background: #bd8f65; }
+    .herbier-title {
+      z-index: 1;
+      margin-top: 57%;
+      color: #46513a;
+      font-family: var(--serif);
+      font-size: clamp(20px, 3.2vw, 38px);
+      font-style: italic;
+    }
+    .art--onde { background: #e5a1a1; }
+    .onde-shape {
+      position: absolute;
+      width: 64%;
+      height: 61%;
+      border: 2px solid #643950;
+      border-radius: 50%;
+      transform: rotate(-31deg);
+      box-shadow: 0 0 0 11px #e5a1a1, 0 0 0 13px #643950, 0 0 0 24px #e5a1a1, 0 0 0 26px #643950;
+    }
+    .onde-type {
+      z-index: 1;
+      color: #643950;
+      font-family: var(--sans);
+      font-size: clamp(40px, 7vw, 88px);
+      font-weight: 700;
+      line-height: .82;
+      letter-spacing: -.12em;
+      text-align: center;
+      transform: rotate(-8deg);
+    }
+    .onde-type span { display: block; font-family: var(--serif); font-weight: 500; font-style: italic; }
+    .art--atelier { background: #d9d8d1; }
+    .atelier-box {
+      width: 47%;
+      aspect-ratio: .75;
+      background: #edeae2;
+      display: grid;
+      place-items: center;
+      box-shadow: 18px 22px 0 #363b3520;
+      transform: rotate(-7deg);
+    }
+    .atelier-seal {
+      width: 68%;
+      aspect-ratio: 1;
+      border: 1px solid #343a32;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #343a32;
+      font-family: var(--serif);
+      font-size: clamp(32px, 5vw, 62px);
+      font-style: italic;
+      position: relative;
+    }
+    .atelier-seal::before, .atelier-seal::after {
+      content: "ATELIER · ATELIER · ATELIER ·";
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 7px;
+      font-style: normal;
+      letter-spacing: .12em;
+      top: 14%;
+    }
+    .atelier-seal::after { content: "PARIS · PARIS · PARIS ·"; top: auto; bottom: 14%; }
+    .project-meta { display: flex; justify-content: space-between; gap: 16px; padding-top: 15px; }
+    .project-name { font-size: 15px; font-weight: 600; letter-spacing: -.03em; }
+    .project-type { margin-top: 5px; color: var(--muted); font-size: 12px; }
+    .project-year { color: var(--muted); font-family: var(--mono); font-size: 10px; padding-top: 3px; }
+
+    .about {
+      background: var(--lime);
+      padding: 86px 0 92px;
+    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start; }
+    .about h2 {
+      margin: 23px 0 0;
+      max-width: 550px;
+      font-size: clamp(40px, 6vw, 73px);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -.07em;
+    }
+    .about h2 em { font-family: var(--serif); font-weight: 500; }
+    .about-copy { padding-top: 43px; max-width: 440px; }
+    .about-copy p { margin: 0 0 18px; font-size: 15px; line-height: 1.8; }
+    .about-copy .text-link { margin-top: 13px; }
+
+    footer { padding: 78px 0 24px; }
+    .footer-top { display: flex; justify-content: space-between; align-items: end; gap: 24px; padding-bottom: 72px; }
+    .footer-top h2 {
+      margin: 18px 0 0;
+      font-size: clamp(43px, 7vw, 86px);
+      font-weight: 500;
+      letter-spacing: -.075em;
+      line-height: .96;
+    }
+    .footer-top h2 em { font-family: var(--serif); font-weight: 500; }
+    .contact-button {
+      flex: 0 0 auto;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: white;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.4;
+      transition: transform .25s ease, background .25s ease;
+    }
+    .contact-button:hover { transform: rotate(-8deg) scale(1.05); background: var(--ink); }
+    .footer-bottom {
+      border-top: 1px solid var(--line);
+      padding-top: 19px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-link { transition: color .2s; }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 40px, 600px); }
+      .topbar { height: 70px; }
+      .availability { margin-left: auto; margin-right: 14px; font-size: 8px; }
+      .menu-toggle { display: block; }
+      .nav {
+        display: none;
+        position: absolute;
+        z-index: 5;
+        top: 69px;
+        left: 0;
+        right: 0;
+        padding: 22px 20px 26px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .nav.open { display: flex; }
+      .nav a { font-size: 11px; }
+      .hero { min-height: auto; padding: 91px 0 76px; grid-template-columns: 1fr; gap: 36px; }
+      .hero h1 { font-size: clamp(57px, 13vw, 92px); }
+      .hero-note { display: flex; align-items: end; justify-content: space-between; gap: 18px; }
+      .hero-note p { margin: 0; font-size: 13px; }
+      .hero-note .text-link { flex: 0 0 auto; }
+      .work { padding: 14px 0 78px; }
+      .section-head { align-items: flex-start; flex-direction: column; margin-bottom: 20px; }
+      .filters { gap: 6px; }
+      .filter { padding: 8px 11px; font-size: 8px; }
+      .project-grid { gap: 36px 12px; }
+      .art { height: clamp(180px, 54vw, 320px); }
+      .art::after { inset: 8px; }
+      .project-meta { display: block; padding-top: 11px; }
+      .project-name { font-size: 13px; }
+      .project-type { font-size: 10px; line-height: 1.5; }
+      .project-year { display: none; }
+      .about { padding: 64px 0 68px; }
+      .about-grid { grid-template-columns: 1fr; gap: 8px; }
+      .about h2 { font-size: clamp(48px, 11vw, 70px); }
+      .about-copy { padding-top: 12px; }
+      .about-copy p { font-size: 14px; }
+      footer { padding-top: 62px; }
+      .footer-top { align-items: flex-start; flex-direction: column; padding-bottom: 48px; }
+      .footer-top h2 { font-size: clamp(48px, 11vw, 76px); }
+      .contact-button { width: 112px; height: 112px; font-size: 11px; }
+      .footer-bottom { gap: 14px; flex-wrap: wrap; font-size: 8px; }
+    }
+    @media (max-width: 390px) {
+      .availability { letter-spacing: 0; }
+      .hero-note { align-items: flex-start; flex-direction: column; }
+      .project-grid { grid-template-columns: 1fr; gap: 30px; }
+      .art { height: 92vw; max-height: 370px; }
+      .project-year { display: block; }
+      .footer-links { gap: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="wordmark" href="#accueil" aria-label="Camille Moreau, accueil">CAMILLE<span>®</span></a>
+    <div class="availability">Disponible pour projets</div>
+    <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navigation">☰</button>
+    <nav class="nav" id="navigation" aria-label="Navigation principale">
+      <a href="#projets">Projets</a>
+      <a href="#apropos">À propos</a>
+      <a href="#contact">Contact ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="wrap hero" id="accueil">
+      <div>
+        <div class="eyebrow">Graphiste indépendante · Paris & partout</div>
+        <h1>Des idées qui<br>prennent <em>forme.</em></h1>
+      </div>
+      <div class="hero-note">
+        <p>J’imagine des identités visuelles sensibles et des univers graphiques qui racontent quelque chose.</p>
+        <a class="text-link" href="#projets">Voir mes projets <span>↘</span></a>
+      </div>
+    </section>
+
+    <section class="wrap work" id="projets">
+      <div class="section-head">
+        <h2>Une sélection récente <span class="mono">(04)</span></h2>
+        <div class="filters" role="group" aria-label="Filtrer les projets">
+          <button class="filter active" type="button" data-filter="all" aria-pressed="true">Tout voir</button>
+          <button class="filter" type="button" data-filter="identite" aria-pressed="false">Identité</button>
+          <button class="filter" type="button" data-filter="edition" aria-pressed="false">Édition</button>
+          <button class="filter" type="button" data-filter="affiche" aria-pressed="false">Affiche</button>
+        </div>
+      </div>
+      <div class="project-grid">
+        <article class="project" data-category="identite affiche">
+          <div class="art art--soleil" role="img" aria-label="Affiche solaire aux tons corail et jaune pour la marque Solstice">
+            <div class="soleil-disc"></div>
+            <div class="soleil-word">solstice</div>
+            <div class="soleil-caption">Le goût des beaux jours · 2025</div>
+          </div>
+          <div class="project-meta">
+            <div><div class="project-name">Solstice — Un été en pot</div><div class="project-type">Identité visuelle, packaging</div></div>
+            <div class="project-year">2025</div>
+          </div>
+        </article>
+        <article class="project" data-category="edition">
+          <div class="art art--herbier" role="img" aria-label="Couverture éditoriale minimaliste de l'ouvrage Herbier vivant">
+            <div class="herbier-paper"><span class="leaf leaf-one"></span><span class="leaf leaf-two"></span><span class="herbier-title">herbier vivant</span></div>
+          </div>
+          <div class="project-meta">
+            <div><div class="project-name">Herbier vivant</div><div class="project-type">Direction artistique, édition</div></div>
+            <div class="project-year">2024</div>
+          </div>
+        </article>
+        <article class="project" data-category="affiche">
+          <div class="art art--onde" role="img" aria-label="Affiche typographique rose pour le festival culturel Onde">
+            <div class="onde-shape"></div>
+            <div class="onde-type">ONDE<span>festival</span></div>
+          </div>
+          <div class="project-meta">
+            <div><div class="project-name">Onde — Festival en mouvement</div><div class="project-type">Affiche, campagne culturelle</div></div>
+            <div class="project-year">2024</div>
+          </div>
+        </article>
+        <article class="project" data-category="identite edition">
+          <div class="art art--atelier" role="img" aria-label="Identité graphique épurée pour l'Atelier Auguste">
+            <div class="atelier-box"><div class="atelier-seal">A.</div></div>
+          </div>
+          <div class="project-meta">
+            <div><div class="project-name">Atelier Auguste</div><div class="project-type">Identité, papeterie</div></div>
+            <div class="project-year">2023</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="about" id="apropos">
+      <div class="wrap about-grid">
+        <div>
+          <div class="eyebrow">Quelques mots sur moi</div>
+          <h2>Curieuse de nature,<br><em>graphiste</em> de métier.</h2>
+        </div>
+        <div class="about-copy">
+          <p>Je suis Camille, graphiste indépendante basée à Paris. J’accompagne les marques, les lieux et les personnes qui ont une histoire à partager.</p>
+          <p>De la première idée au dernier détail, je crée des identités singulières, joyeuses et pensées pour durer. Toujours avec écoute, intention et un petit faible pour les belles couleurs.</p>
+          <a class="text-link" href="mailto:bonjour@camillemoreau.studio">En savoir plus <span>↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap" id="contact">
+    <div class="footer-top">
+      <div>
+        <div class="eyebrow">Un projet en tête ?</div>
+        <h2>On en parle<br><em>autour d’un café.</em></h2>
+      </div>
+      <a class="contact-button" href="mailto:bonjour@camillemoreau.studio" aria-label="Écrire à Camille par e-mail">Écrivez-moi<br>un petit mot ↗</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© Camille Moreau 2025</span>
+      <span>Fait avec soin à Paris</span>
+      <div class="footer-links">
+        <a class="footer-link" href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a>
+        <a class="footer-link" href="mailto:bonjour@camillemoreau.studio">E-mail ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const filterButtons = document.querySelectorAll(".filter");
+    const projects = document.querySelectorAll(".project");
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selected = button.dataset.filter;
+        filterButtons.forEach((item) => {
+          const isActive = item === button;
+          item.classList.toggle("active", isActive);
+          item.setAttribute("aria-pressed", String(isActive));
+        });
+        projects.forEach((project) => {
+          const categories = project.dataset.category.split(" ");
+          project.hidden = selected !== "all" && !categories.includes(selected);
+        });
+      });
+    });
+
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navigation = document.querySelector("#navigation");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Ouvrir le menu" : "Fermer le menu");
+      navigation.classList.toggle("open", !isOpen);
+    });
+    navigation.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        navigation.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Ouvrir le menu");
+      }
+    });
+  </script>
+</body>
+</html>
